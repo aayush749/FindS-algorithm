@@ -1,7 +1,6 @@
 #include <iostream>
 
-#include "vendor/csv.hpp"
-
+#include "data_reader.hpp"
 #include "find_S.hpp"
 
 int main()
@@ -9,8 +8,9 @@ int main()
 
     DataSet dset("dataset/play.csv");
 
-    auto val = dset[0];
-    printf("%s\n", val[ColName::enjoy_sport].c_str());
-   
+    auto result = FindS(dset);
+    
+    std::cout<<result;
+
     return 0;
 }
