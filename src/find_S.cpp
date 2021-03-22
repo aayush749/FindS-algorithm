@@ -29,3 +29,20 @@ Vec<std::string> FindS(const DataSet& dataSet)
 
     return initialHypothesis;
 }
+
+bool Test(const Vec<Vec<std::string>>& input, const Vec<std::string>& hypothesis)
+{
+    auto iRow = input[0];
+    int i = 0;
+    for(auto& hFeature : hypothesis)
+    {
+        if(hFeature != "?")
+        {
+            if(iRow[i] != hFeature)
+                return false;
+        }
+        i++;
+    }
+
+    return true;
+}

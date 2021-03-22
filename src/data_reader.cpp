@@ -8,6 +8,6 @@ std::ostream& operator<<(std::ostream& stream, Vec<std::string> vec)
         stream << "'" << vec[i] <<"'" << ", ";
     }
 
-    stream << "'" << vec[i] <<"'" <<std::endl;
+    stream << "'" << vec[i] <<"'";
     return stream;
 }
