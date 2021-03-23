@@ -53,28 +53,27 @@ public:
 
         Vec<std::string> tempVec;
         m_NumberOfRows = 0;
-        std::string sky, air_temp, humidity, wind, water, forecast, enjoy;
+
+        std::vector<std::string> col_names = reader.get_col_names();
+        m_NumberOfColumns = col_names.size();
+
         for(CSVRow& row : reader)
         {
-            sky = row["sky"].get<std::string_view>();
-            air_temp = row["air temp"].get<std::string_view>();
-            humidity = row["humidity"].get<std::string_view>();
-            wind = row["wind"].get<std::string_view>();
-            water = row["water"].get<std::string_view>();
-            forecast = row["forecast"].get<std::string_view>();
-            enjoy = row["enjoy sport"].get<std::string_view>();
-
             tempVec.clear();
-            tempVec.push_back(sky);
-            tempVec.push_back(air_temp);
-            tempVec.push_back(humidity);
-            tempVec.push_back(wind);
-            tempVec.push_back(water);
-            tempVec.push_back(forecast);
-            tempVec.push_back(enjoy);
+            for(std::string& col : col_names)
+                tempVec.push_back(row[col].get<std::string>());
+            
+            
             ds.push_back(tempVec);
             m_NumberOfRows++;
         }
+
+        //Convert all the output strings (yes/no) to lowercase
+        int i = 0;
+        for(auto& row : ds)
+        std::for_each(row[m_NumberOfColumns - 1].begin(), row[m_NumberOfColumns - 1].end(), [](char& c) {
+        c = ::tolower(c);
+        });
     }
 
     const Vec<std::string>& operator[](size_t index) const
@@ -96,10 +95,16 @@ public:
     {
         return m_NumberOfRows;
     }
+    
+    const size_t GetColumnCount() const
+    {
+        return m_NumberOfColumns;
+    }
 
 private:
     std::vector<Vec<std::string>> ds;
-    size_t m_NumberOfRows;
+    size_t m_NumberOfRows, m_NumberOfColumns;
 };
 
+std::ostream& operator<<(std::ostream& stream, const DataSet& dataset);
 std::ostream& operator<<(std::ostream& stream, Vec<std::string> vec);

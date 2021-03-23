@@ -11,3 +11,13 @@ std::ostream& operator<<(std::ostream& stream, Vec<std::string> vec)
     stream << "'" << vec[i] <<"'";
     return stream;
 }
+
+std::ostream& operator<<(std::ostream& stream, const DataSet& dataset)
+{
+    for(int i = 0; i < dataset.GetRowCount(); i++)
+    {
+        stream<<dataset[i]<<std::endl;
+    }
+
+    return stream;
+}
